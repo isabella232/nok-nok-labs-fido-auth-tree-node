@@ -27,29 +27,33 @@ The following are the installation steps:
 ```bash
 ../$CATALINA_HOME/webapps/gwtutorial/WEB-INF/classes/configurations/default/SessionPlugin
 ```
-**5.** Update the API endpoints for the login page by navigating to the following URI. 
-```http
-http://{{am-server-domain-and-port}}/gwtutorial/configure
-```
-Replace {{tenant}} with the supplied tenant name. Replace {{am-server-domain-and-port}} with the domain and port where you installed the Tutorial WebApp. Then paste the following text into the configuration box and click on "save".
-
+**5.** Update the API endpoints for the login page by editing the following file:
 ```json
+gwtutorial/config/config.js
+```
+Then replace the content of the file with the following:
+
+```javascript
+var tenant = "{{tenant}}";
+var amserver = "{{am-server-domain-and-port}}";
+
+var nnlconfig =
 {
     "version": "1.2",
-    "nnlappsdk_url": "https://cloud.noknok.com/{{tenant}}/webapps/nnlgateway-6.0.2",
-    "reg_endpoint": "https://cloud.noknok.com/{{tenant}}/webapps/nnlgateway/nnl/reg",
-    "auth_endpoint": "https://cloud.noknok.com/{{tenant}}/webapps/nnlgateway/nnl/auth",
-	"login_url": "https://{{am-server-domain-and-port}}/gwtutorial/login",
+    "nnlappsdk_url": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway-6.0.2",
+    "reg_endpoint": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway/nnl/reg",
+    "auth_endpoint": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway/nnl/auth",
+	"login_url": "https://" + amserver + "/gwtutorial/login",
 	"fed_login_url": null,
     "fed_logout_url": null,
-    "recovery_setup_endpoint": "https://cloud.noknok.com/{{tenant}}/webapps/nnlgateway/recovery/setup",
-    "recovery_verify_endpoint": "https://cloud.noknok.com/{{tenant}}/webapps/nnlgateway/recovery/verify",
-    "netverify_endpoint": "https://{{am-server-domain-and-port}}/gwtutorial/nvinit",
+    "recovery_setup_endpoint": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway/recovery/setup",
+    "recovery_verify_endpoint": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway/recovery/verify",
+    "netverify_endpoint": "https://" + amserver + "/gwtutorial/nvinit",
     "federation_enabled": false,
     "sso_enabled": true,
 }
 ``` 
-**Note that the configuration is saved in the local browser. If you use a different browser, you will need to save the same configuration there.**
+Replace {{am-server-domain-and-port}} with the domain and port where you installed the Access Manager and {{tenant}} with the supplied tenant name.
 
 **6.** Restart the web container to pick up the new node. The custom node then appears in the **authentication trees menu**.
 
@@ -92,18 +96,20 @@ NNL Token Validator Node is a Tree Node that serves 2 purposes.
 
 These are the Node Configuration Properties:  
 
-- **Authorization Cookie Name:** name of the authentication cookie which contains the JWT received from NNL Auth Server.  
-- **AM Endpoint:** URI to the AM endpoint of the hosted AM server.
-- **Login Page Endpoint:** URI to the tutorial webapp login page hosted on the server. 
+- **Node Name:** name you choose for the node, e.g., NNL Token Validator Node
+- **Authorization Cookie Name:** name of the authentication cookie which contains the JWT received from NNL Auth Server, e.g., Authorization
+- **AM Endpoint:** URI to the AM endpoint of the hosted AM server, e.g., https://{{hostname}}/openam
+- **Login Page Endpoint:** URI to the tutorial webapp login page hosted on the server, e.g., https://{{hostname}}/gwtutorial
 
 Update the hostname in the settings to match your installation:
 
 <img src="./images/node_configuration.png" width=30%>
 
 ## Registration Flow
-Before being able to use FIDO, you need to register a credential. Navigate to http://{{am-server-domain-and-port}}/gwtutorial in a WebAuthn capable browser.
+Before being able to use FIDO, you need to register a FIDO credential. Navigate to https://{{am-server-domain-and-port}}/gwtutorial in a WebAuthn capable browser. Also,
+make sure you also create the same user in the Access Manager identity store.
 
-**1.** Login using any choosen user, e.g., "demo", and hardcoded password "noknok".
+**1.** Login using a username defined in your Access Manager identity store, e.g., "demo", and hardcoded password "noknok".
 
 <img src="./images/signinpage.png" width=50%>
 
@@ -119,11 +125,11 @@ Before being able to use FIDO, you need to register a credential. Navigate to ht
 
 ## Authentication Flow
 
-You will need a service provider that has been configured to work with your Access Manager server.
+You can test the authentication flow using the Access Manager console.
 
-**1.** Navigate to your service provider, which should redirect to your Access Manager if you are not signed in already.
+**1.** Navigate to your Access Manager console, e.g., https://{{am-server-domain-and-port}}/openam.
 
-**2.** The **NNL Token Validator Node** redirects to the NNL Authentication Client's *Sign-In* page hosted on your **Access Manager** server.
+**2.** The **NNL Token Validator Node** redirects to the NNL Authentication Client's *Sign-In* page hosted on your Access Manager server.
 
 <img src="./images/signinpage.png" width=50%>
 
@@ -133,11 +139,11 @@ You will need a service provider that has been configured to work with your Acce
 
 <img src="./images/fidopopup.png" width=50%>
 
-**4.** After successful authentication User is redirected to the **consent page** on the **AM server**.
+**4.** After successful authentication User is redirected to the **consent page** on the Access Manager console.
 
 <img src="./images/consent.png" width=50%>
 
-**5.** Once User consent, the browser is redirected to the client application with the session information for accessing **protected resources**.
+**5.** Once User consent, the browser is redirected to Access Manager console and the user is logged in.
 
 <img src="./images/resource.png" width=50%>
 
