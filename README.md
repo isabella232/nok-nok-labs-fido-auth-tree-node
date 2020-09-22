@@ -37,8 +37,7 @@ Then replace the content of the file with the following:
 var tenant = "{{tenant}}";
 var amserver = "{{am-server-domain-and-port}}";
 
-var nnlconfig =
-{
+var nnlConfig = {
     "version": "1.2",
     "nnlappsdk_url": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway-6.0.2",
     "reg_endpoint": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway/nnl/reg",
@@ -50,7 +49,7 @@ var nnlconfig =
     "recovery_verify_endpoint": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway/recovery/verify",
     "netverify_endpoint": "https://" + amserver + "/gwtutorial/nvinit",
     "federation_enabled": false,
-    "sso_enabled": true,
+    "sso_enabled": true
 }
 ``` 
 Replace {{am-server-domain-and-port}} with the domain and port where you installed the Access Manager and {{tenant}} with the supplied tenant name.
