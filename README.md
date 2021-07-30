@@ -39,7 +39,7 @@ var amserver = "{{am-server-domain-and-port}}";
 
 var nnlConfig = {
     "version": "1.2",
-    "nnlappsdk_url": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway-6.0.2",
+    "nnlappsdk_url": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway-6.0.3",
     "reg_endpoint": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway/nnl/reg",
     "auth_endpoint": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway/nnl/auth",
 	"login_url": "https://" + amserver + "/gwtutorial/login",
