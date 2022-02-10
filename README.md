@@ -34,25 +34,23 @@ gwtutorial/config/config.js
 Then replace the content of the file with the following:
 
 ```javascript
-var nnlConfig = {};
-
-nnlConfig.appsdk_version = "8.0.0";
-nnlConfig.version = "8.0.0";
-
-nnlConfig.tenant = "{{tenant}}";
-nnlConfig.amserver = document.location.origin;
-nnlConfig.apiserver = "https://cloud.noknok.com";
-
-nnlConfig.web_oob_url = "${amserver}/gwtutorial/oobrecv.html";
-nnlConfig.nnlappsdk_url = "${apiserver}/${tenant}/webapps/nnlgateway-${appsdk_version}";
-nnlConfig.storage_endpoint = "${apiserver}/${tenant}/webapps/nnlgateway/storage";
-nnlConfig.reg_endpoint = "${apiserver}/${tenant}/webapps/nnlgateway/nnl/reg";
-nnlConfig.auth_endpoint = "${apiserver}/${tenant}/webapps/nnlgateway/nnl/auth";
-nnlConfig.login_url = "${amserver}/gwtutorial/login";
-nnlConfig.fed_login_url = "${amserver}/gwtutorial/fedlogin";
-nnlConfig.fed_logout_url = "${amserver}/gwtutorial/fedlogout";
-nnlConfig.netverify_endpoint = "${amserver}/gwtutorial/nvinit";
-nnlConfig.federation_enabled = false;
+var nnlConfig = {
+  "appsdk_version": "8.0.0",
+  "version": "8.0.0",
+  "tenant": "{{tenant}}",
+  "amserver": document.location.origin,
+  "apiserver": "https://cloud.noknok.com",
+  "web_oob_url": "${amserver}/gwtutorial/oobrecv.html",
+  "nnlappsdk_url": "${apiserver}/${tenant}/webapps/nnlgateway-${appsdk_version}",
+  "storage_endpoint": "${apiserver}/${tenant}/webapps/nnlgateway/storage",
+  "reg_endpoint": "${apiserver}/${tenant}/webapps/nnlgateway/nnl/reg",
+  "auth_endpoint": "${apiserver}/${tenant}/webapps/nnlgateway/nnl/auth",
+  "login_url": "${amserver}/gwtutorial/login",
+  "fed_login_url": "${amserver}/gwtutorial/fedlogin",
+  "fed_logout_url": "${amserver}/gwtutorial/fedlogout",
+  "netverify_endpoint": "${amserver}/gwtutorial/nvinit",
+  "federation_enabled": false
+}
 ``` 
 Replace {{tenant}} with the supplied tenant name.
 
