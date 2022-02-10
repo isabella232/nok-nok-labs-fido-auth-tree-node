@@ -11,7 +11,7 @@ Nok Nok is the trusted leader in next-generation consumer authentication providi
 ## Installation
 The following are the installation steps:
 
-**1.** Copy the `nnl-auth-nodes.jar` file and the specified external dependencies (excluding gwtutorial.war) provided into the following directory where AM is deployed.
+**1.** Copy the `nnl-auth-nodes-<version>.jar`, `nnl-federation-common-<version>.jar` files and the specified external dependencies (excluding gwtutorial.war) provided into the following directory where AM is deployed.
 ```bash
 ../$CATALINA_HOME/webapps/openam/WEB-INF/lib
 ```
@@ -34,25 +34,27 @@ gwtutorial/config/config.js
 Then replace the content of the file with the following:
 
 ```javascript
-var tenant = "{{tenant}}";
-var amserver = "{{am-server-domain-and-port}}";
+var nnlConfig = {};
 
-var nnlConfig = {
-    "version": "1.2",
-    "nnlappsdk_url": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway-6.0.3",
-    "reg_endpoint": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway/nnl/reg",
-    "auth_endpoint": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway/nnl/auth",
-	"login_url": "https://" + amserver + "/gwtutorial/login",
-	"fed_login_url": null,
-    "fed_logout_url": null,
-    "recovery_setup_endpoint": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway/recovery/setup",
-    "recovery_verify_endpoint": "https://cloud.noknok.com/" + tenant + "/webapps/nnlgateway/recovery/verify",
-    "netverify_endpoint": "https://" + amserver + "/gwtutorial/nvinit",
-    "federation_enabled": false,
-    "sso_enabled": true
-}
+nnlConfig.appsdk_version = "8.0.0";
+nnlConfig.version = "8.0.0";
+
+nnlConfig.tenant = "{{tenant}}";
+nnlConfig.amserver = document.location.origin;
+nnlConfig.apiserver = "https://cloud.noknok.com";
+
+nnlConfig.web_oob_url = "${amserver}/gwtutorial/oobrecv.html";
+nnlConfig.nnlappsdk_url = "${apiserver}/${tenant}/webapps/nnlgateway-${appsdk_version}";
+nnlConfig.storage_endpoint = "${apiserver}/${tenant}/webapps/nnlgateway/storage";
+nnlConfig.reg_endpoint = "${apiserver}/${tenant}/webapps/nnlgateway/nnl/reg";
+nnlConfig.auth_endpoint = "${apiserver}/${tenant}/webapps/nnlgateway/nnl/auth";
+nnlConfig.login_url = "${amserver}/gwtutorial/login";
+nnlConfig.fed_login_url = "${amserver}/gwtutorial/fedlogin";
+nnlConfig.fed_logout_url = "${amserver}/gwtutorial/fedlogout";
+nnlConfig.netverify_endpoint = "${amserver}/gwtutorial/nvinit";
+nnlConfig.federation_enabled = false;
 ``` 
-Replace {{am-server-domain-and-port}} with the domain and port where you installed the Access Manager and {{tenant}} with the supplied tenant name.
+Replace {{tenant}} with the supplied tenant name.
 
 **6.** Restart the web container to pick up the new node. The custom node then appears in the **authentication trees menu**.
 
@@ -60,11 +62,11 @@ Replace {{am-server-domain-and-port}} with the domain and port where you install
 
 | Distribution Package | Description |
 | ------ | ------ |
-| log4j-slf4j-impl-2.12.0.jar | The Apache Log4j SLF4J API binding to Log4j 2 Core  |
-| log4j-jcl-2.12.0.jar | The Apache Log4j Commons Logging Adapter |
-| log4j-core-2.12.0.jar, log4j-api-2.12.0.jar | The Apache Log4j Implementation |
-| log4j-1.2-api-2.12.0.jar | The Apache Log4j dependency for 1.x Compatibility API |
-| nnlgateway.jar | Session Manager library that manages JWT Token Configurations and performs JWT Token validation |
+| log4j-slf4j-impl-2.16.0.jar | The Apache Log4j SLF4J API binding to Log4j 2 Core  |
+| log4j-jcl-2.16.0.jar | The Apache Log4j Commons Logging Adapter |
+| log4j-core-2.16.0.jar, log4j-api-2.12.0.jar | The Apache Log4j Implementation |
+| log4j-1.2-api-2.16.0.jar | The Apache Log4j dependency for 1.x Compatibility API |
+| log4j-api-2.16.0.jar | The Apache Log4j API |
 | gwtutorial.war | Tutorial WebApp client for LoginPage supporting FIDO Authentication |
 
 ## Configuration
